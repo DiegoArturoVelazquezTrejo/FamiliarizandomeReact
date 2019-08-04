@@ -1,10 +1,10 @@
 import React from 'react';
-import {Component} from 'react'; 
+import {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-//Importando una navegación que hicimos como componente 
-//import Navigation from './components/Navigation'; 
+//Importando una navegación que hicimos como componente
+//import Navigation from './components/Navigation';
 import ToDoForm from './components/ToDoForm';
 
 
@@ -12,48 +12,59 @@ import ToDoForm from './components/ToDoForm';
 import {todos} from './toDos.json';
 
 
-//Esto es para crear un componente en React 
+//Esto es para crear un componente en React
 class App extends Component{
     constructor(){
-	super();
-	this.state = {
-	    todos: todos 
-	};
-	this.handleAddTodo = this.handleAddTodo.bind(this); 
+	    super();
+    	this.state = {
+    	    todos: todos
+    	};
+    	this.handleAddTodo = this.handleAddTodo.bind(this);
     }
 
     handleAddTodo(todo){
-	this.setState({
-	    //Agregar una nueva tarea al estado de tareas
-	    todos:[...this.state.todos, todo]
-	})
+      	this.setState({
+      	    //Agregar una nueva tarea al estado de tareas
+      	    todos:[...this.state.todos, todo]
+      	})
     }
-    
+
+    removeToDo(index){
+      this.setState({
+        todos: this.state.todos.filter((e, i) =>{
+          return i !== index; 
+        })
+      })
+    }
+
     render(){
-	 
+
     //Puedo procesar los datos antes de renderizarlos
     const todos = this.state.todos.map((todo, i) => {
 	return(
-	    <div className="col-md-4">
-		<div className="card mt-4">
-		   <div className="card-header">
-		       <h3>{todo.title}</h3>
-		       <span className="badge badge-pill badge-danger ml-2">
-		          {todo.priority}
-	               </span>
-	           </div>
-		
-		   <div className="card-body">
+	    <div className="col-md-4" key={i}>
+		   <div className="card mt-4">
+		     <div className="card-header">
+		        <h3>{todo.title}</h3>
+		        <span className="badge badge-pill badge-danger ml-2">
+		            {todo.priority}
+	          </span>
+	       </div>
+         <div className="card-body">
                        <p>{todo.description}</p>
 	       	       <p><mark>{todo.responsible}</mark></p>
 	  	   </div>
-		
-		</div>
-            </div>
+         <div className="card-footer">
+              <button className="btn btn-danger" onClick={this.removeToDo.bind(this, i)}>
+                Delete
+              </button>
+         </div>
+		  </div>
+    </div>
 	)
-    }); 
+    });
 
-	
+
     return (
       <div className="App">
 	    <nav className="navbar navbar-dark bg-dark">
