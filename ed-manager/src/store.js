@@ -10,7 +10,7 @@ const initialState = {
 
 //Función reductora que será la que haga los cambios de la data en la aplicación
 //Voy a tener que leer la acción para modificar el estado
-const reducerEntrenador = (state = {initialState}, action) =>{
+const reducerEntrenador = (state = initialState, action) =>{
   return state;
 }
 
